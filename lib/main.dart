@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:legalite/Lpages/ClientScreen.dart';
 import 'package:legalite/Lpages/HomeScreen.dart';
+import 'package:legalite/Lpages/Nested%20pages/Cases.dart';
 import 'package:legalite/Lpages/ProfileScreen.dart';
 
 void main() {
@@ -28,15 +29,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // '/': (context) => const MyApp(),
-        '/lhome': (context) => const Home(),
+        '/lhome': (context) => Home(),
         '/lprofile': (context) => const Profile(),
         '/lclient': (context) => const Clients(),
+        '/lallCases': (context) => Cases(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Home(),
+      home: Home(),
     );
   }
 }
