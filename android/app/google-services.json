@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "948241633845",
+    "project_id": "legalite-23e10",
+    "storage_bucket": "legalite-23e10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948241633845:android:d4508ab98ff064406ad77c",
+        "android_client_info": {
+          "package_name": "com.example.legalite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3Sz8vkp5qSk43exem9kegD7V1ZyrYmKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
