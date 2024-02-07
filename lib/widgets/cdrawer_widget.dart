@@ -97,7 +97,7 @@ class MyDrawer extends StatelessWidget {
               title: const Text('Legal Aid',
                   style: TextStyle(fontSize: 14, color: Colors.white70)),
               onTap: () {
-                Navigator.pushNamed(context, '/lclient');
+                Navigator.pushNamed(context, '/legalaid');
                 // Navigator.of(context).push(
                 //     MaterialPageRoute(builder: (context) => const Clients()));
               },

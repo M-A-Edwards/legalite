@@ -113,11 +113,11 @@ class _LSignUpWidgetState extends State<LSignUpWidget> {
   Future signUp() async {
     try {
       CollectionReference clients =
-          FirebaseFirestore.instance.collection('clients');
+          FirebaseFirestore.instance.collection('lawyers');
       clients.add({
         'Name': nameController.text.trim(),
         'Email': emailController.text.trim(),
-        'Type':'Lawyer',
+        'Type': 'Lawyer',
       });
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),

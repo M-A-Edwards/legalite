@@ -8,9 +8,10 @@ import 'package:legalite/Lpages/Nested%20pages/Cases.dart';
 import 'package:legalite/Lpages/ProfileScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:legalite/pages/AttorneyScreen.dart';
+import 'package:legalite/pages/LegalAid.dart';
 import 'package:legalite/pages/ProfileScreen.dart';
 import 'package:legalite/widgets/Auth_page.dart';
-import 'package:legalite/widgets/switch_page.dart';
+//import 'package:legalite/widgets/switch_page.dart';
 import 'firebase_options.dart';
 
 Future main() async {
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const Home(),
         '/profile': (context) => const Profile(),
         '/lawyer': (context) => const Attorneys(),
+        '/legalaid': (context) => const LegalAid(),
         '/lclient': (context) => const Clients(),
         '/lhome': (context) => LHome(),
         '/lprofile': (context) => const LProfile(),
@@ -79,9 +81,10 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return const Center(child: Text("Something went wrong!"));
           } else if (snapshot.hasData) {
-            // String uid = FirebaseAuth.instance.currentUser!.uid;
-            // return SwitchPage(uid);
             return Home();
+            // String uid = FirebaseAuth.instance.currentUser!.uid;
+            // // return SwitchPage(uid);
+            // return SwitchPage(uid);
           } else {
             return const AuthPage();
           }
