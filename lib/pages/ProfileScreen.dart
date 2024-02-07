@@ -1,16 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:legalite/main.dart';
-import 'package:legalite/widgets/drawer_widget.dart';
+import 'package:legalite/widgets/cdrawer_widget.dart';
 
-class LProfile extends StatefulWidget {
-  const LProfile({super.key});
+class Profile extends StatefulWidget {
+  const Profile({super.key});
 
   @override
-  State<LProfile> createState() => _LProfileState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _LProfileState extends State<LProfile> {
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +56,7 @@ class _LProfileState extends State<LProfile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'Defense Lawyer',
+                      'Client',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -73,12 +72,12 @@ class _LProfileState extends State<LProfile> {
             children: <Widget>[
               ListTile(
                 title: Text(
-                  'Lawyer ID',
+                  'Date of Birth',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: Text('1005-21-733065'),
+                subtitle: Text('08/10/2003'),
               ),
               Divider(),
               ListTile(
@@ -103,23 +102,13 @@ class _LProfileState extends State<LProfile> {
               Divider(),
               ListTile(
                 title: Text(
-                  'Law Firm',
+                  'Address',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 subtitle: Text(
                     '10711 Rose Ave. Apt #112\n90034\n\nLos Angeles, California'),
-              ),
-              Divider(),
-              ListTile(
-                title: Text(
-                  'About',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Text('ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
               ),
               Divider(),
               ElevatedButton.icon(

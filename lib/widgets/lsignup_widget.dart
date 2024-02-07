@@ -1,21 +1,24 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:legalite/main.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 
-class LoginWidget extends StatefulWidget {
-  final VoidCallback onClickedSignUp;
-  final VoidCallback onClickedLLogin;
-  const LoginWidget({
+class LSignUpWidget extends StatefulWidget {
+  final Function() onClickedSignUp;
+  final Function() onClickedLLogin;
+  const LSignUpWidget({
     Key? key,
     required this.onClickedSignUp,
     required this.onClickedLLogin,
   }) : super(key: key);
+
   @override
-  State<LoginWidget> createState() => _LoginWidgetState();
+  State<LSignUpWidget> createState() => _LSignUpWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LSignUpWidgetState extends State<LSignUpWidget> {
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -23,6 +26,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 
@@ -37,10 +41,19 @@ class _LoginWidgetState extends State<LoginWidget> {
             height: 100,
           ),
           Text(
-            "Login C",
+            "Signup L",
             style: TextStyle(fontSize: 60, fontFamily: 'Consolas'),
           ),
           const SizedBox(height: 200),
+          TextField(
+            controller: nameController,
+            cursorColor: Colors.black,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(labelText: 'Name'),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
           TextField(
             controller: emailController,
             cursorColor: Colors.black,
@@ -60,24 +73,10 @@ class _LoginWidgetState extends State<LoginWidget> {
               minimumSize: const Size.fromHeight(50),
             ),
             icon: const Icon(Icons.lock_open, size: 32),
-            label: const Text('Sign in', style: TextStyle(fontSize: 24)),
-            onPressed: signIn,
+            label: const Text('Sign Up', style: TextStyle(fontSize: 24)),
+            onPressed: signUp,
           ),
           SizedBox(height: 24),
-          RichText(
-              text: TextSpan(
-                  style: TextStyle(color: Colors.black, fontSize: 20),
-                  text: "Create Client? ",
-                  children: [
-                TextSpan(
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = widget.onClickedSignUp,
-                  text: 'Sign Up',
-                  style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Theme.of(context).colorScheme.secondary),
-                ),
-              ])),
           RichText(
               text: TextSpan(
                   style: TextStyle(color: Colors.black, fontSize: 20),
@@ -86,7 +85,21 @@ class _LoginWidgetState extends State<LoginWidget> {
                 TextSpan(
                   recognizer: TapGestureRecognizer()
                     ..onTap = widget.onClickedLLogin,
-                  text: 'Login',
+                  text: 'Log In',
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Theme.of(context).colorScheme.secondary),
+                ),
+              ])),
+          RichText(
+              text: TextSpan(
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  text: "Create Client? ",
+                  children: [
+                TextSpan(
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = widget.onClickedSignUp,
+                  text: 'SignUp',
                   style: TextStyle(
                       decoration: TextDecoration.underline,
                       color: Theme.of(context).colorScheme.secondary),
@@ -97,19 +110,20 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-  Future signIn() async {
-    // showDialog(
-    //     context: context,
-    //     barrierDismissible: false,
-    //     builder: (context) => const Center(child: CircularProgressIndicator()));
+  Future signUp() async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
+      CollectionReference clients =
+          FirebaseFirestore.instance.collection('clients');
+      clients.add({
+        'Name': nameController.text.trim(),
+        'Email': emailController.text.trim(),
+        'Type':'Lawyer',
+      });
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       print(e);
     }
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }

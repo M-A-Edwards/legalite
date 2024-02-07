@@ -3,19 +3,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:legalite/main.dart';
 
-class LoginWidget extends StatefulWidget {
-  final VoidCallback onClickedSignUp;
-  final VoidCallback onClickedLLogin;
-  const LoginWidget({
+class LLoginWidget extends StatefulWidget {
+  final VoidCallback onClickedLSignUp;
+  final VoidCallback onClickedSignIn;
+  const LLoginWidget({
     Key? key,
-    required this.onClickedSignUp,
-    required this.onClickedLLogin,
+    required this.onClickedLSignUp,
+    required this.onClickedSignIn,
   }) : super(key: key);
   @override
-  State<LoginWidget> createState() => _LoginWidgetState();
+  State<LLoginWidget> createState() => _LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginWidgetState extends State<LLoginWidget> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -37,7 +37,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             height: 100,
           ),
           Text(
-            "Login C",
+            "Login L",
             style: TextStyle(fontSize: 60, fontFamily: 'Consolas'),
           ),
           const SizedBox(height: 200),
@@ -67,11 +67,11 @@ class _LoginWidgetState extends State<LoginWidget> {
           RichText(
               text: TextSpan(
                   style: TextStyle(color: Colors.black, fontSize: 20),
-                  text: "Create Client? ",
+                  text: "Create Lawyer? ",
                   children: [
                 TextSpan(
                   recognizer: TapGestureRecognizer()
-                    ..onTap = widget.onClickedSignUp,
+                    ..onTap = widget.onClickedLSignUp,
                   text: 'Sign Up',
                   style: TextStyle(
                       decoration: TextDecoration.underline,
@@ -81,12 +81,12 @@ class _LoginWidgetState extends State<LoginWidget> {
           RichText(
               text: TextSpan(
                   style: TextStyle(color: Colors.black, fontSize: 20),
-                  text: "Lawyer Login? ",
+                  text: "Client Login? ",
                   children: [
                 TextSpan(
                   recognizer: TapGestureRecognizer()
-                    ..onTap = widget.onClickedLLogin,
-                  text: 'Login',
+                    ..onTap = widget.onClickedSignIn,
+                  text: 'Log In',
                   style: TextStyle(
                       decoration: TextDecoration.underline,
                       color: Theme.of(context).colorScheme.secondary),

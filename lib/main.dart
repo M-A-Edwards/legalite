@@ -1,12 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:legalite/Lpages/ClientScreen.dart';
 import 'package:legalite/Lpages/HomeScreen.dart';
+import 'package:legalite/pages/HomeScreen.dart';
+import 'package:legalite/Lpages/Nested%20pages/Cases.dart';
 import 'package:legalite/Lpages/ProfileScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:legalite/widgets/login_widget.dart';
+import 'package:legalite/pages/AttorneyScreen.dart';
+import 'package:legalite/pages/ProfileScreen.dart';
+import 'package:legalite/widgets/Auth_page.dart';
+import 'package:legalite/widgets/switch_page.dart';
 import 'firebase_options.dart';
-import 'package:legalite/Lpages/Nested%20pages/Cases.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +31,8 @@ Future main() async {
   runApp(const MyApp());
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -33,19 +40,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'Legalite',
       initialRoute: '/',
       routes: {
         // '/': (context) => const MyApp(),
-        '/lhome': (context) => const Home(),
-        '/lprofile': (context) => const Profile(),
+        '/home': (context) => const Home(),
+        '/profile': (context) => const Profile(),
+        '/lawyer': (context) => const Attorneys(),
         '/lclient': (context) => const Clients(),
+        '/lhome': (context) => LHome(),
+        '/lprofile': (context) => const LProfile(),
         '/lallCases': (context) => Cases(),
       },
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      // theme: ThemeData(
+      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      //   useMaterial3: true,
+      // ),
       home: const MainPage(),
     );
   }
@@ -59,7 +71,7 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
+        builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -67,9 +79,11 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return const Center(child: Text("Something went wrong!"));
           } else if (snapshot.hasData) {
-            return const Home();
+            // String uid = FirebaseAuth.instance.currentUser!.uid;
+            // return SwitchPage(uid);
+            return Home();
           } else {
-            return const LoginWidget();
+            return const AuthPage();
           }
         },
       ),

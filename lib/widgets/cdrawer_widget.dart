@@ -64,7 +64,7 @@ class MyDrawer extends StatelessWidget {
               title: const Text('Home',
                   style: TextStyle(fontSize: 14, color: Colors.white70)),
               onTap: () {
-                Navigator.pushNamed(context, '/lhome');
+                Navigator.pushNamed(context, '/home');
                 // Navigator.of(context).push(
                 //     MaterialPageRoute(builder: (context) => const Home()));
               },
@@ -76,7 +76,7 @@ class MyDrawer extends StatelessWidget {
                   style: TextStyle(fontSize: 14, color: Colors.white70)),
               onTap: () {
                 // Navigator.pop(context);
-                Navigator.pushNamed(context, '/lprofile');
+                Navigator.pushNamed(context, '/profile');
                 // Navigator.of(context).push(
                 //     MaterialPageRoute(builder: (context) => const Profile()));
               },
@@ -84,10 +84,10 @@ class MyDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.people_outline_outlined,
                   color: Colors.white54),
-              title: const Text('Clients',
+              title: const Text('Lawyers',
                   style: TextStyle(fontSize: 14, color: Colors.white70)),
               onTap: () {
-                Navigator.pushNamed(context, '/lclient');
+                Navigator.pushNamed(context, '/lawyer');
                 // Navigator.of(context).push(
                 //     MaterialPageRoute(builder: (context) => const Clients()));
               },
