@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:legalite/main.dart';
+// import 'package:legalite/main.dart';
 import 'package:legalite/widgets/drawer_widget.dart';
 
 class LProfile extends StatefulWidget {
@@ -71,7 +71,7 @@ class _LProfileState extends State<LProfile> {
           const SizedBox(height: 20),
           Column(
             children: <Widget>[
-              ListTile(
+              const ListTile(
                 title: Text(
                   'Lawyer ID',
                   style: TextStyle(
@@ -80,8 +80,8 @@ class _LProfileState extends State<LProfile> {
                 ),
                 subtitle: Text('1005-21-733065'),
               ),
-              Divider(),
-              ListTile(
+              const Divider(),
+              const ListTile(
                 title: Text(
                   'Email',
                   style: TextStyle(
@@ -90,8 +90,8 @@ class _LProfileState extends State<LProfile> {
                 ),
                 subtitle: Text('sriharini03.m@gmail.com'),
               ),
-              Divider(),
-              ListTile(
+              const Divider(),
+              const ListTile(
                 title: Text(
                   'Phone Number',
                   style: TextStyle(
@@ -100,8 +100,8 @@ class _LProfileState extends State<LProfile> {
                 ),
                 subtitle: Text('+1 310-425-4557'),
               ),
-              Divider(),
-              ListTile(
+              const Divider(),
+              const ListTile(
                 title: Text(
                   'Law Firm',
                   style: TextStyle(
@@ -111,8 +111,8 @@ class _LProfileState extends State<LProfile> {
                 subtitle: Text(
                     '10711 Rose Ave. Apt #112\n90034\n\nLos Angeles, California'),
               ),
-              Divider(),
-              ListTile(
+              const Divider(),
+              const ListTile(
                 title: Text(
                   'About',
                   style: TextStyle(
@@ -121,13 +121,13 @@ class _LProfileState extends State<LProfile> {
                 ),
                 subtitle: Text('ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
               ),
-              Divider(),
+              const Divider(),
               ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
+                    minimumSize: const Size.fromHeight(50),
                   ),
-                  icon: Icon(Icons.lock_open, size: 32),
-                  label: Text('Sign Out', style: TextStyle(fontSize: 24)),
+                  icon: const Icon(Icons.lock_open, size: 32),
+                  label: const Text('Sign Out', style: TextStyle(fontSize: 24)),
                   onPressed: () => {
                         FirebaseAuth.instance.signOut(),
                         Navigator.pushReplacementNamed(context, '/'),

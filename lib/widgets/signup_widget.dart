@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:legalite/main.dart';
+// import 'package:legalite/main.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,10 +37,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
-          Text(
+          const Text(
             "SignUp C",
             style: TextStyle(fontSize: 60, fontFamily: 'Consolas'),
           ),
@@ -76,10 +76,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             label: const Text('Sign Up', style: TextStyle(fontSize: 24)),
             onPressed: signUp,
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           RichText(
               text: TextSpan(
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  style: const TextStyle(color: Colors.black, fontSize: 20),
                   text: "Client Login? ",
                   children: [
                 TextSpan(
@@ -93,7 +93,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               ])),
           RichText(
               text: TextSpan(
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  style: const TextStyle(color: Colors.black, fontSize: 20),
                   text: "Create Lawyer? ",
                   children: [
                 TextSpan(
@@ -112,16 +112,17 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
   Future signUp() async {
     try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim());
       CollectionReference clients =
           FirebaseFirestore.instance.collection('clients');
-      clients.add({
+      clients.doc(userCredential.user!.uid).set({
         'Name': nameController.text.trim(),
         'Email': emailController.text.trim(),
         'Type': 'Client',
       });
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
       print(e);
     }
