@@ -95,7 +95,7 @@ class _LegalAidState extends State<LegalAid> {
                       'First Name': firstnameController.text.trim(),
                       'Last Name': lastnameController.text.trim(),
                     });
-                  } on FirebaseAuthException catch (e) {
+                  } on FirebaseAuthException catch () {
                     const AlertDialog(
                       content: Text("Error Submitting Form"),
                     );
