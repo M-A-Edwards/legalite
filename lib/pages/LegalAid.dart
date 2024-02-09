@@ -99,7 +99,7 @@ class _LegalAidState extends State<LegalAid> {
                     const AlertDialog(
                       content: Text("Error Submitting Form"),
                     );
-                    print(e)
+                    print(e);
                   }
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Form Submitted')),
