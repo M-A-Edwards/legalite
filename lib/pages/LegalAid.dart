@@ -95,10 +95,11 @@ class _LegalAidState extends State<LegalAid> {
                       'First Name': firstnameController.text.trim(),
                       'Last Name': lastnameController.text.trim(),
                     });
-                  } on FirebaseAuthException catch () {
+                  } on FirebaseAuthException catch (e) {
                     const AlertDialog(
                       content: Text("Error Submitting Form"),
                     );
+                    print(e)
                   }
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Form Submitted')),
