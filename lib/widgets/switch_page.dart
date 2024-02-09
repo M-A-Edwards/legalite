@@ -32,10 +32,11 @@ class SwitchPage extends StatelessWidget {
     for (String collectionName in collections) {
       CollectionReference collection =
           FirebaseFirestore.instance.collection(collectionName);
-      // QuerySnapshot querySnapshot =
-      // await collection.where('Email', isEqualTo: userId).get();
+      QuerySnapshot querySnapshot = await collection
+          .where('Email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          .get();
       DocumentSnapshot documentSnapshot = await collection.doc(userId).get();
-      if (documentSnapshot.exists) {
+      if (documentSnapshot.exists || querySnapshot.docs.isNotEmpty) {
         return collectionName;
       }
     }
