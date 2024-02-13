@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:legalite/widgets/cdrawer_widget.dart';
+import 'package:legalite/widgets/chatbot.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,12 +13,22 @@ class _HomeState extends State<Home> {
   final padding = const EdgeInsets.symmetric(horizontal: 20);
   @override
   Widget build(BuildContext context) {
-    // const urlImage =
-    //     "https://www.shutterstock.com/image-photo/photo-words-wooden-block-objects-arranged-2364889927";
     return Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
         ),
-        drawer: const MyDrawer());
+        drawer: const MyDrawer(),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ChatScreen()),
+            );
+          },
+          child: const Text('Open Chat Bot'),
+        ),
+      ),
+    );
   }
 }
