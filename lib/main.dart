@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:legalite/Lpages/ClientScreen.dart';
@@ -11,7 +11,7 @@ import 'package:legalite/pages/AttorneyScreen.dart';
 import 'package:legalite/pages/LegalAid.dart';
 import 'package:legalite/pages/ProfileScreen.dart';
 import 'package:legalite/widgets/Auth_page.dart';
-//import 'package:legalite/widgets/switch_page.dart';
+import 'package:legalite/widgets/switch_page.dart';
 import 'firebase_options.dart';
 
 Future main() async {
@@ -73,18 +73,57 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, AsyncSnapshot snapshot) {
+        builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
             return const Center(child: Text("Something went wrong!"));
-          } else if (snapshot.hasData) {
-            return Home();
-            // String uid = FirebaseAuth.instance.currentUser!.uid;
-            // // return SwitchPage(uid);
-            // return SwitchPage(uid);
+          } else if (snapshot.hasData && snapshot.data != null) {
+            return const SwitchPage();
+            //  User? user = snapshot.data;
+            // print("User UID: ${user!.uid}");
+
+            // String userId = user.uid;
+            // return FutureBuilder<DocumentSnapshot>(
+            //   future: FirebaseFirestore.instance
+            //       .collection('clients')
+            //       .doc(userId)
+            //       .get(),
+            //   builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return Center(
+            //         child: CircularProgressIndicator(),
+            //       );
+            //     } else if (snapshot.hasError) {
+            //       return Center(child: Text("Error fetching data!"));
+            //     } else if (snapshot.hasData && snapshot.data!.exists) {
+            //       return Home();
+            //     } else {
+            //       return FutureBuilder<DocumentSnapshot>(
+            //         future: FirebaseFirestore.instance
+            //             .collection('lawyers')
+            //             .doc(userId)
+            //             .get(),
+            //         builder:
+            //             (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            //           if (snapshot.connectionState == ConnectionState.waiting) {
+            //             return Center(
+            //               child: CircularProgressIndicator(),
+            //             );
+            //           } else if (snapshot.hasError) {
+            //             return Center(child: Text("Error fetching data!"));
+            //           } else if (snapshot.hasData && snapshot.data!.exists) {
+            //             return LHome();
+            //           } else {
+            //             return Text("User not found in either collection");
+            //           }
+            //         },
+            //       );
+            //     }
+            //   },
+            // );
           } else {
             return const AuthPage();
           }

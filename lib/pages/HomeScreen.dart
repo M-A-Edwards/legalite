@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:legalite/widgets/cdrawer_widget.dart';
 import 'package:legalite/widgets/chatbot.dart';
@@ -11,6 +12,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final padding = const EdgeInsets.symmetric(horizontal: 20);
+  String user = FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
