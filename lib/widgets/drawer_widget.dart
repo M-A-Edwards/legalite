@@ -93,6 +93,16 @@ class MyDrawer extends StatelessWidget {
                 //     MaterialPageRoute(builder: (context) => const Clients()));
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.balance_sharp, color: Colors.white54),
+              title: const Text('Chat',
+                  style: TextStyle(fontSize: 14, color: Colors.white70)),
+              onTap: () {
+                Navigator.pushNamed(context, '/lchatpeople');
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => const Clients()));
+              },
+            ),
           ],
         ),
       ),

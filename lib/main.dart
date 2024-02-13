@@ -1,8 +1,11 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:legalite/Lpages/Chat.dart';
+import 'package:legalite/Lpages/ChatPeople.dart';
 import 'package:legalite/Lpages/ClientScreen.dart';
 import 'package:legalite/Lpages/HomeScreen.dart';
+import 'package:legalite/pages/Chat.dart';
 import 'package:legalite/pages/HomeScreen.dart';
 import 'package:legalite/Lpages/Nested%20pages/Cases.dart';
 import 'package:legalite/Lpages/ProfileScreen.dart';
@@ -46,14 +49,17 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // '/': (context) => const MyApp(),
-        '/home': (context) => const Home(),
+        '/home': (context) => Home(),
         '/profile': (context) => const Profile(),
         '/lawyer': (context) => const Attorneys(),
         '/legalaid': (context) => const LegalAid(),
+        '/chat': (context) => ChatPage(),
         '/lclient': (context) => const Clients(),
         '/lhome': (context) => LHome(),
         '/lprofile': (context) => const LProfile(),
         '/lallCases': (context) => Cases(),
+        '/lchatpeople': (context) => LChatPeople(),
+        '/lchat': (context) => LChatPage()
       },
       theme: ThemeData(primarySwatch: Colors.blue),
       // theme: ThemeData(
