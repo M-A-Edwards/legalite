@@ -13,7 +13,7 @@ class SwitchPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data == 'clients') {
-              return const Home();
+              return Home();
             } else if (snapshot.data == 'lawyers') {
               return LHome();
             }

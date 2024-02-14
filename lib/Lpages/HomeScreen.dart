@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:legalite/widgets/drawer_widget.dart';
+import 'package:legalite/widgets/chatbot.dart';
 
 class Case {
   final String title;
@@ -81,6 +82,20 @@ class LHome extends StatelessWidget {
             ],
           ),
         ),
-        drawer: const MyDrawer());
+        drawer: const MyDrawer(),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 16.0, bottom: 16.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ChatScreen()),
+            );
+          },
+          child: const Icon(Icons.chat),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
   }
 }

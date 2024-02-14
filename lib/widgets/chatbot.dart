@@ -3,90 +3,136 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   List<String> messages = [];
+  final ScrollController _scrollController = ScrollController();
 
-  Future<void> sendMessage(String message) async {
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  Future<void> _sendMessage(String message) async {
+    setState(() {
+      messages.add('You: $message');
+      _scrollToBottom();
+    });
+
     final response = await http.post(
-      Uri.parse('https://api.openai.com/v1/engines/davinci/completions'),
+      Uri.parse('https://api.openai.com/v1/chat/completions'),
       headers: {
-        'Authorization': 'Bearer API_KEY',
+        'Authorization': 'Bearer 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',
         'Content-Type': 'application/json',
       },
       body: json.encode({
-        'prompt': message,
+        'messages': [
+          {
+            'role': 'user',
+            'content': message,
+          }
+        ],
         'max_tokens': 150,
+        'model': 'gpt-3.5-turbo',
       }),
     );
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
       setState(() {
-        messages.add(message);
-        messages.add(data['choices'][0]['text']);
+        if (data['choices'] != null &&
+            data['choices'].isNotEmpty &&
+            data['choices'][0]['message'] != null) {
+          messages.add(data['choices'][0]['message']['content']);
+          _scrollToBottom();
+        } else {
+          print('Failed to get response text: ${response.body}');
+        }
       });
     } else {
-      print('Failed to send message');
+      print('Failed to send message: ${response.body}');
     }
-  }
-  void openChatBot() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.7,
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(messages[index]),
-                    );
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    hintText: 'Type your message...',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () {
-                        String message = _controller.text;
-                        _controller.clear();
-                        sendMessage(message);
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat Bot'),
+        title: const Text('Law Bot'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: openChatBot,
-          child: const Text('Open Chat Bot'),
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                  child: Align(
+                    alignment: messages[index].startsWith('You:') ? Alignment.centerRight : Alignment.centerLeft,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: messages[index].startsWith('You:') ? Colors.blue : Colors.grey[300],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(4),
+                      child: Text(
+                        messages[index],
+                        style: TextStyle(
+                          color: messages[index].startsWith('You:') ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your message...',
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.send),
+                  onPressed: () {
+                    String message = _controller.text;
+                    if (message.isNotEmpty) {
+                      _controller.clear();
+                      _sendMessage(message);
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
