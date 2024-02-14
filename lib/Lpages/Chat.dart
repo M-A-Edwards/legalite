@@ -350,7 +350,7 @@ class MyChatUIState extends State<LChatPage> {
                           Map<String, dynamic> data =
                               allMessages[index].data() as Map<String, dynamic>;
                           debugPrint(data["text"]);
-                          if (data["senderId"] == clientId) {
+                          if (data["senderId"] != clientId) {
                             return ListTile(
                               leading: Container(
                                 width: 50,
