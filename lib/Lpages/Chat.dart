@@ -3,96 +3,463 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:legalite/widgets/drawer_widget.dart';
 
-class LChatPage extends StatefulWidget {
-  @override
-  _LChatPageState createState() => _LChatPageState();
+// class LChatPage extends StatefulWidget {
+//   @override
+//   _LChatPageState createState() => _LChatPageState();
+// }
+
+// class _LChatPageState extends State<LChatPage> {
+//   final FirebaseAuth _auth = FirebaseAuth.instance;
+//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+//   final TextEditingController _messageController = TextEditingController();
+
+//   User? _user;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _user = _auth.currentUser;
+//   }
+
+//   void _sendMessage() async {
+//     String messageText = _messageController.text.trim();
+//     if (messageText.isNotEmpty) {
+//       await _firestore.collection('messages').add({
+//         'text': messageText,
+//         'senderId': _user!.uid,
+//         'recipientId': ModalRoute.of(context as BuildContext)!
+//             .settings
+//             .arguments as String,
+//         'timestamp': Timestamp.now(),
+//       });
+//       _messageController.clear();
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Chat Page'),
+//       ),
+//       body: Column(
+//         children: [
+//           Expanded(
+//             child: StreamBuilder<QuerySnapshot>(
+//               stream: _firestore
+//                   .collection('messages')
+//                   .where('senderId', isEqualTo: _user!.uid)
+//                   .where('recipientId',
+//                       isEqualTo:
+//                           ModalRoute.of(context)!.settings.arguments as String)
+//                   .orderBy('timestamp')
+//                   .snapshots(),
+//               builder: (context, snapshot) {
+//                 if (!snapshot.hasData) {
+//                   return Center(
+//                     child: CircularProgressIndicator(),
+//                   );
+//                 }
+//                 List<DocumentSnapshot> messages = snapshot.data!.docs;
+
+//                 return ListView.builder(
+//                   itemCount: messages.length,
+//                   itemBuilder: (context, index) {
+//                     Map<String, dynamic> data =
+//                         messages[index].data() as Map<String, dynamic>;
+//                     return ListTile(
+//                       title: Text(data['text']),
+//                       subtitle: Text(data['senderId']),
+//                     );
+//                   },
+//                 );
+//               },
+//             ),
+//           ),
+//           Padding(
+//             padding: EdgeInsets.all(8.0),
+//             child: Row(
+//               children: [
+//                 Expanded(
+//                   child: TextField(
+//                     controller: _messageController,
+//                     decoration: InputDecoration(hintText: 'Type a message...'),
+//                   ),
+//                 ),
+//                 IconButton(
+//                   icon: Icon(Icons.send),
+//                   onPressed: _sendMessage,
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],class LChatPage extends StatefulWidget {
+//   @override
+//   _LChatPageState createState() => _LChatPageState();
+// }
+
+// class _LChatPageState extends State<LChatPage> {
+//   final FirebaseAuth _auth = FirebaseAuth.instance;
+//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+//   final TextEditingController _messageController = TextEditingController();
+
+//   User? _user;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _user = _auth.currentUser;
+//   }
+
+//   void _sendMessage() async {
+//     String messageText = _messageController.text.trim();
+//     if (messageText.isNotEmpty) {
+//       await _firestore.collection('messages').add({
+//         'text': messageText,
+//         'senderId': _user!.uid,
+//         'recipientId': ModalRoute.of(context as BuildContext)!
+//             .settings
+//             .arguments as String,
+//         'timestamp': Timestamp.now(),
+//       });
+//       _messageController.clear();
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Chat Page'),
+//       ),
+//       body: Column(
+//         children: [
+//           Expanded(
+//             child: StreamBuilder<QuerySnapshot>(
+//               stream: _firestore
+//                   .collection('messages')
+//                   .where('senderId', isEqualTo: _user!.uid)
+//                   .where('recipientId',
+//                       isEqualTo:
+//                           ModalRoute.of(context)!.settings.arguments as String)
+//                   .orderBy('timestamp')
+//                   .snapshots(),
+//               builder: (context, snapshot) {
+//                 if (!snapshot.hasData) {
+//                   return Center(
+//                     child: CircularProgressIndicator(),
+//                   );
+//                 }
+//                 List<DocumentSnapshot> messages = snapshot.data!.docs;
+
+//                 return ListView.builder(
+//                   itemCount: messages.length,
+//                   itemBuilder: (context, index) {
+//                     Map<String, dynamic> data =
+//                         messages[index].data() as Map<String, dynamic>;
+//                     return ListTile(
+//                       title: Text(data['text']),
+//                       subtitle: Text(data['senderId']),
+//                     );
+//                   },
+//                 );
+//               },
+//             ),
+//           ),
+//           Padding(
+//             padding: EdgeInsets.all(8.0),
+//             child: Row(
+//               children: [
+//                 Expanded(
+//                   child: TextField(
+//                     controller: _messageController,
+//                     decoration: InputDecoration(hintText: 'Type a message...'),
+//                   ),
+//                 ),
+//                 IconButton(
+//                   icon: Icon(Icons.send),
+//                   onPressed: _sendMessage,
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+//       ),
+//     );
+//   }
+// }
+var url = 'https://i.imgur.com/gGSj8Ng.png';
+var urlTwo = 'https://i.imgur.com/ub680tN.png';
+
+class ChatModel {
+  final String _messages;
+  final bool _isMe;
+
+  ChatModel(this._messages, this._isMe);
+
+  String get message => _messages;
+
+  bool get isMee => _isMe;
 }
 
-class _LChatPageState extends State<LChatPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final TextEditingController _messageController = TextEditingController();
+List<ChatModel> chatModelList = [];
 
-  User? _user;
+class LChatPage extends StatefulWidget {
+  const LChatPage({Key? key}) : super(key: key);
 
   @override
+  MyChatUIState createState() => MyChatUIState();
+}
+
+class MyChatUIState extends State<LChatPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  User? _user;
+
+  var controller = TextEditingController();
+  var scrollController = ScrollController();
+  var message = '';
+
+  void animateList() {
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (scrollController.offset !=
+          scrollController.position.maxScrollExtent) {
+        animateList();
+      }
+    });
+  }
+
+  @override
+  //   @override
   void initState() {
     super.initState();
     _user = _auth.currentUser;
   }
 
-  void _sendMessage() async {
-    String messageText = _messageController.text.trim();
-    if (messageText.isNotEmpty) {
-      await _firestore.collection('messages').add({
-        'text': messageText,
-        'senderId': _user!.uid,
-        'recipientId': ModalRoute.of(context as BuildContext)!
-            .settings
-            .arguments as String,
-        'timestamp': Timestamp.now(),
-      });
-      _messageController.clear();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as List;
+    final clientId = args[0] as String; // Assuming clientId is an integer
+    final senderName = args[1] as String;
+    void sendMessage() async {
+      String messageText = controller.text.trim();
+      debugPrint("inside send message, message text: $messageText");
+      if (messageText.isNotEmpty) {
+        await _firestore.collection('messages').add({
+          'text': messageText,
+          'senderId': _user!.uid,
+          'recipientId': clientId,
+          'timestamp': Timestamp.now(),
+        });
+      }
+    }
+
     return Scaffold(
+      backgroundColor: const Color(0xffF5F5F3),
       appBar: AppBar(
-        title: Text('Chat Page'),
+        elevation: 12,
+        titleSpacing: 10,
+        backgroundColor: const Color(0xffD11C2D),
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(
+            Icons.arrow_back_ios_sharp,
+            color: Colors.white,
+          ),
+        ),
+        leadingWidth: 20,
+        title: ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(url),
+          ),
+          title: Text(
+            senderName,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          subtitle: const Text(
+            'online',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Icon(Icons.videocam_rounded),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Icon(Icons.call),
+          ),
+        ],
       ),
       body: Column(
         children: [
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: _firestore
-                  .collection('messages')
-                  .where('senderId', isEqualTo: _user!.uid)
-                  .where('recipientId',
-                      isEqualTo:
-                          ModalRoute.of(context)!.settings.arguments as String)
-                  .orderBy('timestamp')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                List<DocumentSnapshot> messages = snapshot.data!.docs;
+          Flexible(
+              flex: 1,
+              fit: FlexFit.tight,
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: _firestore
+                      .collection('messages')
+                      .where('senderId', isEqualTo: _user!.uid)
+                      .where('recipientId', isEqualTo: clientId as String)
+                      .orderBy('timestamp')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    List<DocumentSnapshot> messages = snapshot.data!.docs;
 
-                return ListView.builder(
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) {
-                    Map<String, dynamic> data =
-                        messages[index].data() as Map<String, dynamic>;
-                    return ListTile(
-                      title: Text(data['text']),
-                      subtitle: Text(data['senderId']),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
+//                 return ListView.builder(
+//                   itemCount: messages.length,
+//                   itemBuilder: (context, index) {
+//                     Map<String, dynamic> data =
+//                         messages[index].data() as Map<String, dynamic>;
+//                     return ListTile(
+//                       title: Text(data['text']),
+//                       subtitle: Text(data['senderId']),
+//                     );
+//                   },
+//                 );
+//               },
+//             ),
+                    return ListView.builder(
+                        controller: scrollController,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: messages.length,
+                        itemBuilder: (context, index) {
+                          Map<String, dynamic> data =
+                              messages[index].data() as Map<String, dynamic>;
+                          debugPrint(data["text"]);
+                          if (data["senderId"] == clientId) {
+                            return ListTile(
+                              leading: Container(
+                                width: 50,
+                              ),
+                              visualDensity: VisualDensity.comfortable,
+                              title:
+                                  Wrap(alignment: WrapAlignment.end, children: [
+                                Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      color: Color(0xffD11C2D),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text(
+                                    data['text'],
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(color: Colors.white),
+                                    softWrap: true,
+                                  ),
+                                ),
+                              ]),
+                              subtitle: const Padding(
+                                padding: EdgeInsets.only(right: 8, top: 4),
+                                child: Text(
+                                  '10:03 AM',
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ),
+                              trailing: CircleAvatar(
+                                backgroundImage: NetworkImage(urlTwo),
+                              ),
+                            );
+                          } else {
+                            return ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage(url),
+                                ),
+                              ),
+                              title: Wrap(children: [
+                                Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text(
+                                    data['text'],
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                              trailing: Container(
+                                width: 50,
+                              ),
+                              subtitle: const Padding(
+                                padding: EdgeInsets.only(left: 8, top: 4),
+                                child: Text('8:04 AM',
+                                    style: TextStyle(fontSize: 10)),
+                              ),
+                            );
+                          }
+                        });
+                  })),
+          Container(
+            alignment: Alignment.center,
+            color: Colors.white,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(hintText: 'Type a message...'),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 12.0, left: 8),
+                  child: Icon(
+                    Icons.emoji_emotions_outlined,
+                    color: Color(0xffD11C2D),
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: _sendMessage,
+                Expanded(
+                  child: TextFormField(
+                    maxLines: 6,
+                    minLines: 1,
+                    keyboardType: TextInputType.multiline,
+                    controller: controller,
+                    onFieldSubmitted: (value) {
+                      controller.text = value;
+                    },
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 8),
+                      border: InputBorder.none,
+                      focusColor: Colors.white,
+                      hintText: 'Type a message',
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    // chatModelList.add(ChatModel(controller.text, true));
+                    sendMessage();
+                    animateList();
+                    controller.clear();
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(bottom: 8, right: 8),
+                    child: CircleAvatar(
+                      backgroundColor: Color(0xffD11C2D),
+                      child: Icon(
+                        Icons.send,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
+          )
         ],
       ),
     );

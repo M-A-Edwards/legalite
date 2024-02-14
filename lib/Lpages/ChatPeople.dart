@@ -41,7 +41,8 @@ class AvailableClientsList extends StatelessWidget {
               return ListTile(
                 title: Text(clientName),
                 onTap: () {
-                  Navigator.pushNamed(context, '/lchat', arguments: clientId);
+                  Navigator.pushNamed(context, '/lchat',
+                      arguments: [clientId, clientName]);
                 },
               );
             },
