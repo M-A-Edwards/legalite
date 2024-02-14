@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:legalite/widgets/drawer_widget.dart';
+import 'package:legalite/widgets/cdrawer_widget.dart';
 import 'package:legalite/widgets/chatbot.dart';
 
 class Case {
