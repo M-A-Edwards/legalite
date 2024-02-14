@@ -95,7 +95,7 @@ class MyDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.balance_sharp, color: Colors.white54),
-              title: const Text('Chat',
+              title: const Text('Chats',
                   style: TextStyle(fontSize: 14, color: Colors.white70)),
               onTap: () {
                 Navigator.pushNamed(context, '/lchatpeople');
