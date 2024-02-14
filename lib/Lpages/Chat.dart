@@ -303,40 +303,52 @@ class MyChatUIState extends State<LChatPage> {
               flex: 1,
               fit: FlexFit.tight,
               child: StreamBuilder<QuerySnapshot>(
-                  stream: _firestore
-                      .collection('messages')
-                      .where('senderId', isEqualTo: _user!.uid)
-                      .where('recipientId', isEqualTo: clientId as String)
-                      .orderBy('timestamp')
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    List<DocumentSnapshot> messages = snapshot.data!.docs;
+                stream: _firestore
+                    .collection('messages')
+                    .where('senderId', isEqualTo: _user!.uid)
+                    .where('recipientId', isEqualTo: clientId as String)
+                    .orderBy('timestamp')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  List<DocumentSnapshot> senderMessages = snapshot.data!.docs;
 
-//                 return ListView.builder(
-//                   itemCount: messages.length,
-//                   itemBuilder: (context, index) {
-//                     Map<String, dynamic> data =
-//                         messages[index].data() as Map<String, dynamic>;
-//                     return ListTile(
-//                       title: Text(data['text']),
-//                       subtitle: Text(data['senderId']),
-//                     );
-//                   },
-//                 );
-//               },
-//             ),
-                    return ListView.builder(
+                  return StreamBuilder<QuerySnapshot>(
+                    stream: _firestore
+                        .collection('messages')
+                        .where('recipientId', isEqualTo: _user!.uid)
+                        .where('senderId', isEqualTo: clientId as String)
+                        .orderBy('timestamp')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      List<DocumentSnapshot> recipientMessages =
+                          snapshot.data!.docs;
+
+                      // Combine sender and recipient messages
+                      List<DocumentSnapshot> allMessages = [];
+                      allMessages.addAll(senderMessages);
+                      allMessages.addAll(recipientMessages);
+
+                      // Sort messages by timestamp
+                      allMessages.sort(
+                          (a, b) => a['timestamp'].compareTo(b['timestamp']));
+
+                      return ListView.builder(
                         controller: scrollController,
                         physics: const BouncingScrollPhysics(),
-                        itemCount: messages.length,
+                        itemCount: allMessages.length,
                         itemBuilder: (context, index) {
                           Map<String, dynamic> data =
-                              messages[index].data() as Map<String, dynamic>;
+                              allMessages[index].data() as Map<String, dynamic>;
                           debugPrint(data["text"]);
                           if (data["senderId"] == clientId) {
                             return ListTile(
@@ -407,8 +419,121 @@ class MyChatUIState extends State<LChatPage> {
                               ),
                             );
                           }
-                        });
-                  })),
+                        },
+                      );
+                    },
+                  );
+                },
+              )
+              // StreamBuilder<QuerySnapshot>(
+//                   stream: _firestore
+//                       .collection('messages')
+//                       .where('senderId', isEqualTo: _user!.uid)
+//                       .where('recipientId', isEqualTo: clientId as String)
+//                       .orderBy('timestamp')
+//                       .snapshots(),
+//                   builder: (context, snapshot) {
+//                     if (!snapshot.hasData) {
+//                       return Center(
+//                         child: CircularProgressIndicator(),
+//                       );
+//                     }
+//                     List<DocumentSnapshot> messages = snapshot.data!.docs;
+
+// //                 return ListView.builder(
+// //                   itemCount: messages.length,
+// //                   itemBuilder: (context, index) {
+// //                     Map<String, dynamic> data =
+// //                         messages[index].data() as Map<String, dynamic>;
+// //                     return ListTile(
+// //                       title: Text(data['text']),
+// //                       subtitle: Text(data['senderId']),
+// //                     );
+// //                   },
+// //                 );
+// //               },
+// //             ),
+//                     return ListView.builder(
+//                         controller: scrollController,
+//                         physics: const BouncingScrollPhysics(),
+//                         itemCount: messages.length,
+//                         itemBuilder: (context, index) {
+//                           Map<String, dynamic> data =
+//                               messages[index].data() as Map<String, dynamic>;
+//                           debugPrint(data["text"]);
+//                           if (data["senderId"] == clientId) {
+//                             return ListTile(
+//                               leading: Container(
+//                                 width: 50,
+//                               ),
+//                               visualDensity: VisualDensity.comfortable,
+//                               title:
+//                                   Wrap(alignment: WrapAlignment.end, children: [
+//                                 Container(
+//                                   padding: const EdgeInsets.all(10),
+//                                   decoration: const BoxDecoration(
+//                                       shape: BoxShape.rectangle,
+//                                       color: Color(0xffD11C2D),
+//                                       borderRadius: BorderRadius.all(
+//                                           Radius.circular(20))),
+//                                   child: Text(
+//                                     data['text'],
+//                                     textAlign: TextAlign.left,
+//                                     style: const TextStyle(color: Colors.white),
+//                                     softWrap: true,
+//                                   ),
+//                                 ),
+//                               ]),
+//                               subtitle: const Padding(
+//                                 padding: EdgeInsets.only(right: 8, top: 4),
+//                                 child: Text(
+//                                   '10:03 AM',
+//                                   textAlign: TextAlign.right,
+//                                   style: TextStyle(fontSize: 10),
+//                                 ),
+//                               ),
+//                               trailing: CircleAvatar(
+//                                 backgroundImage: NetworkImage(urlTwo),
+//                               ),
+//                             );
+//                           } else {
+//                             return ListTile(
+//                               leading: Padding(
+//                                 padding: const EdgeInsets.only(bottom: 10),
+//                                 child: CircleAvatar(
+//                                   backgroundImage: NetworkImage(url),
+//                                 ),
+//                               ),
+//                               title: Wrap(children: [
+//                                 Container(
+//                                   padding: const EdgeInsets.all(10),
+//                                   decoration: const BoxDecoration(
+//                                       shape: BoxShape.rectangle,
+//                                       color: Colors.white,
+//                                       borderRadius: BorderRadius.all(
+//                                           Radius.circular(20))),
+//                                   child: Text(
+//                                     data['text'],
+//                                     style: const TextStyle(
+//                                       color: Colors.black,
+//                                     ),
+//                                   ),
+//                                 ),
+//                               ]),
+//                               trailing: Container(
+//                                 width: 50,
+//                               ),
+//                               subtitle: const Padding(
+//                                 padding: EdgeInsets.only(left: 8, top: 4),
+//                                 child: Text('8:04 AM',
+//                                     style: TextStyle(fontSize: 10)),
+//                               ),
+//                             );
+//                           }
+//                         });
+//                   }
+//                   )
+              ),
           Container(
             alignment: Alignment.center,
             color: Colors.white,
