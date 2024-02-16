@@ -260,16 +260,22 @@ class MyChatUIState extends State<LChatPage> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xffF5F5F3),
+      backgroundColor: Color.fromRGBO(245, 245, 243, 1),
       appBar: AppBar(
         elevation: 12,
         titleSpacing: 10,
         backgroundColor: const Color(0xffD11C2D),
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.arrow_back_ios_sharp,
-            color: Colors.white,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+            debugPrint("works");
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.arrow_back_ios_sharp,
+              color: Colors.white,
+            ),
           ),
         ),
         leadingWidth: 20,

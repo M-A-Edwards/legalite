@@ -107,7 +107,7 @@ class MyDrawer extends StatelessWidget {
               title: const Text('Chat',
                   style: TextStyle(fontSize: 14, color: Colors.white70)),
               onTap: () {
-                Navigator.pushNamed(context, '/chat');
+                Navigator.pushNamed(context, '/chatpeople');
                 // Navigator.of(context).push(
                 //     MaterialPageRoute(builder: (context) => const Clients()));
               },
