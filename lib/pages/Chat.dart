@@ -265,20 +265,21 @@ class MyChatUIState extends State<ChatPage> {
         elevation: 12,
         titleSpacing: 10,
         backgroundColor: const Color(0xffD11C2D),
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-            debugPrint("works");
-          },
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.arrow_back_ios_sharp,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        leadingWidth: 20,
+        toolbarHeight: 65,
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //     debugPrint("works");
+        //   },
+        //   child: const Padding(
+        //     padding: EdgeInsets.all(8.0),
+        //     child: Icon(
+        //       Icons.arrow_back_ios_sharp,
+        //       color: Colors.white,
+        //     ),
+        //   ),
+        // ),
+        // leadingWidth: 20,
         title: ListTile(
           leading: CircleAvatar(
             backgroundImage: NetworkImage(url),
