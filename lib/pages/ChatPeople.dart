@@ -3,21 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:legalite/widgets/cdrawer_widget.dart';
-// import 'package:legalite/Lpages/Chat.dart';
-// import 'package:legalite/widgets/drawer_widget.dart';
-// import 'package:flutter/rendering.dart';
-// import 'package:legalite/widgets/drawer_widget.dart';
 
-// class ChatPeople extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text("ChatPeople")),
-//       body: AvailableClientsList(),
-//       drawer: const MyDrawer(),
-//     );
-//   }
-// }
 class ChatPeople extends StatefulWidget {
   @override
   _ChatList createState() => _ChatList();
@@ -117,37 +103,3 @@ class _ChatList extends State<ChatPeople> {
     }
   }
 }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return StreamBuilder<QuerySnapshot>(
-  //       stream: FirebaseFirestore.instance.collection('messages').snapshots(),
-  //       builder: (context, snapshot) {
-
-  //         if (snapshot.connectionState == ConnectionState.waiting) {
-  //           return Center(
-  //             child: CircularProgressIndicator(),
-  //           );
-  //         }
-  //         List<DocumentSnapshot> messages = snapshot.data!.docs;
-  //         debugPrint('data data: $messages');
-
-  //         return ListView.builder(
-  //           itemCount: messages.length,
-  //           itemBuilder: (context, index) {
-  //             String clientId = messages[index].id;
-  //             Map<String, dynamic> messagesData =
-  //                 messages[index].data() as Map<String, dynamic>;
-  //             debugPrint('client data: $messagesData');
-  //             String clientName = messagesData['senderId'];
-  //             return ListTile(
-  //               title: Text(clientName),
-  //               onTap: () {
-  //                 Navigator.pushNamed(context, '/chat',
-  //                     arguments: [clientId, clientName]);
-  //               },
-  //             );
-  //           },
-  //         );
-  //       });
-  // }
-// }
