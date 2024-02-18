@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:legalite/main.dart';
 import 'package:legalite/widgets/drawer_widget.dart';
+import 'package:legalite/Lpages/nested_pages/editLprofile.dart';
 
 class LProfile extends StatefulWidget {
   const LProfile({super.key});
@@ -33,13 +34,38 @@ class _LProfileState extends State<LProfile> {
                 final userData = snapshot.data!.data() as Map<String, dynamic>;
                 return ListView(
                   children: <Widget>[
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, right: 8.0),
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const EditLProfilePage()),
+                            );
+                          },
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.all(12)),
+                            minimumSize: MaterialStateProperty.all<Size>(
+                                const Size(120, 50)),
+                          ),
+                          icon: const Icon(Icons.edit, size: 20),
+                          label: const Text('Edit Profile',
+                              style: TextStyle(fontSize: 16)),
+                        ),
+                      ),
+                    ),
                     Container(
                       height: 250,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               CircleAvatar(
@@ -53,13 +79,13 @@ class _LProfileState extends State<LProfile> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
                                 userData['Name'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30,
                                 ),
@@ -70,8 +96,10 @@ class _LProfileState extends State<LProfile> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                'Defense Lawyer',
-                                style: TextStyle(
+                                (userData['Desc'] != null)
+                                    ? userData['Desc']
+                                    : 'Lawyer',
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
                                 ),
@@ -84,18 +112,21 @@ class _LProfileState extends State<LProfile> {
                     const SizedBox(height: 20),
                     Column(
                       children: <Widget>[
-                        const ListTile(
-                          title: Text(
+                        ListTile(
+                          title: const Text(
                             'Lawyer ID',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text('1005-21-733065'),
+                          subtitle: (userData['LID'] != null)
+                              ? Text(userData['LID'])
+                              : const Text('<None>'),
+                          // subtitle: Text(userData['LID']),
                         ),
                         const Divider(),
                         ListTile(
-                          title: Text(
+                          title: const Text(
                             'Email',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -104,35 +135,54 @@ class _LProfileState extends State<LProfile> {
                           subtitle: Text(userData['Email']),
                         ),
                         const Divider(),
-                        const ListTile(
-                          title: Text(
+                        ListTile(
+                          title: const Text(
                             'Phone Number',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text('+1 310-425-4557'),
+                          subtitle: (userData['Phone Number'] != null)
+                              ? Text(userData['Phone Number'])
+                              : const Text('<None>'),
+                          // subtitle: Text(userData['Phone Number']),
                         ),
                         const Divider(),
-                        const ListTile(
-                          title: Text(
+                        ListTile(
+                          title: const Text(
                             'Law Firm',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text(
-                              '10711 Rose Ave. Apt #112\n90034\n\nLos Angeles, California'),
+                          subtitle: (userData['Address'] != null)
+                              ? Text(userData['Address'])
+                              : const Text('<None>'),
+                          // subtitle: Text(userData['Address']),
                         ),
                         const Divider(),
-                        const ListTile(
-                          title: Text(
-                            'About',
+                        ListTile(
+                          title: const Text(
+                            'Location',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text('ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+                          subtitle: (userData['Location'] != null)
+                              ? Text(userData['Location'])
+                              : const Text('<None>'),
+                        ),
+                        const Divider(),
+                        ListTile(
+                          title: const Text(
+                            'Education',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: (userData['Education'] != null)
+                              ? Text(userData['Education'])
+                              : const Text('<None>'),
                         ),
                         const Divider(),
                         ElevatedButton.icon(

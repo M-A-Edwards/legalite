@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:legalite/widgets/cdrawer_widget.dart';
+import 'package:legalite/pages/nested_pages/editprofile.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -28,6 +29,31 @@ class _ProfileState extends State<Profile> {
                 final userData = snapshot.data!.data() as Map<String, dynamic>;
                 return ListView(
                   children: <Widget>[
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, right: 8.0),
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const EditProfilePage()),
+                            );
+                          },
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.all(12)),
+                            minimumSize: MaterialStateProperty.all<Size>(
+                                const Size(120, 50)),
+                          ),
+                          icon: const Icon(Icons.edit, size: 20),
+                          label: const Text('Edit Profile',
+                              style: TextStyle(fontSize: 16)),
+                        ),
+                      ),
+                    ),
                     Container(
                       height: 250,
                       child: Column(
@@ -48,20 +74,20 @@ class _ProfileState extends State<Profile> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
                                 userData['Name'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30,
                                 ),
                               ),
                             ],
                           ),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
@@ -79,18 +105,18 @@ class _ProfileState extends State<Profile> {
                     const SizedBox(height: 20),
                     Column(
                       children: <Widget>[
-                        const ListTile(
-                          title: Text(
+                        ListTile(
+                          title: const Text(
                             'Date of Birth',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text('08/10/2003'),
+                          subtitle: (userData['DOB'] != null)? Text(userData['DOB']):const Text('<None>'),
                         ),
                         const Divider(),
                         ListTile(
-                          title: Text(
+                          title: const Text(
                             'Email',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -99,25 +125,25 @@ class _ProfileState extends State<Profile> {
                           subtitle: Text(userData['Email']),
                         ),
                         const Divider(),
-                        const ListTile(
-                          title: Text(
+                        ListTile(
+                          title: const Text(
                             'Phone Number',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text('+1 310-425-4557'),
+                          subtitle: (userData['Phone Number'] != null)? Text(userData['Phone Number']):const Text('<None>'),
+                          // subtitle: Text(userData['Phone Number']),
                         ),
                         const Divider(),
-                        const ListTile(
-                          title: Text(
+                        ListTile(
+                          title: const Text(
                             'Address',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text(
-                              '10711 Rose Ave. Apt #112\n90034\n\nLos Angeles, California'),
+                          subtitle: (userData['Address'] != null)? Text(userData['Address']):const Text('<None>'),
                         ),
                         const Divider(),
                         ElevatedButton.icon(

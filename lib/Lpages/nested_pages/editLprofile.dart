@@ -17,6 +17,8 @@ class _EditLProfilePageState extends State<EditLProfilePage> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _specialController = TextEditingController();
+  final TextEditingController _locController = TextEditingController();
+  final TextEditingController _eduController = TextEditingController();
 
   @override
   void initState() {
@@ -36,11 +38,21 @@ class _EditLProfilePageState extends State<EditLProfilePage> {
     setState(() {
       _nameController.text = userData['Name'];
       _emailController.text = userData['Email'];
-      _lidController.text = userData['LID'];
-      _phoneNumberController.text = userData['Phone Number'];
-      _addressController.text = userData['Address'];
-      _typeController.text = userData['Desc'];
-      _specialController.text = userData['Tags'];
+      _lidController.text =
+          (userData['LID'] != null) ? userData['LID'] : '<None>';
+      _phoneNumberController.text = (userData['Phone Number'] != null)
+          ? userData['Phone Number']
+          : '<None>';
+      _addressController.text =
+          (userData['Address'] != null) ? userData['Address'] : '<None>';
+      _typeController.text =
+          (userData['Desc'] != null) ? userData['Desc'] : 'Lawyer';
+      _specialController.text =
+          (userData['Tags'] != null) ? userData['Tags'] : '<None>';
+      _locController.text =
+          (userData['Location'] != null) ? userData['Location'] : '<None>';
+      _eduController.text =
+          (userData['Education'] != null) ? userData['Education'] : '<None>';
     });
   }
 
@@ -75,8 +87,16 @@ class _EditLProfilePageState extends State<EditLProfilePage> {
               decoration: const InputDecoration(labelText: 'Phone Number'),
             ),
             TextField(
+              controller: _locController,
+              decoration: const InputDecoration(labelText: 'Location'),
+            ),
+            TextField(
               controller: _addressController,
               decoration: const InputDecoration(labelText: 'Law Firm Address'),
+            ),
+            TextField(
+              controller: _eduController,
+              decoration: const InputDecoration(labelText: 'Education'),
             ),
             TextField(
               controller: _specialController,
@@ -105,6 +125,8 @@ class _EditLProfilePageState extends State<EditLProfilePage> {
       'Address': _addressController.text,
       'Desc': _typeController.text,
       'Tags': _specialController.text,
+      'Location': _locController.text,
+      'Education': _eduController.text,
     });
 
     Navigator.pop(context);

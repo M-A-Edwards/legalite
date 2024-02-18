@@ -34,9 +34,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     setState(() {
       _nameController.text = userData['Name'];
       _emailController.text = userData['Email'];
-      _dobController.text = userData['DOB'];
-      _phoneNumberController.text = userData['Phone Number'];
-      _addressController.text = userData['Address'];
+      _dobController.text =
+          (userData['DOB'] != null) ? userData['DOB'] : '<None>';
+      _phoneNumberController.text = (userData['Phone Number'] != null)
+          ? userData['Phone Number']
+          : '<None>';
+      _addressController.text =
+          (userData['Address'] != null) ? userData['Address'] : '<None>';
     });
   }
 
