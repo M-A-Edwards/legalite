@@ -6,6 +6,7 @@ import 'package:legalite/Lpages/ChatPeople.dart';
 import 'package:legalite/Lpages/ClientScreen.dart';
 import 'package:legalite/Lpages/HomeScreen.dart';
 import 'package:legalite/pages/Chat.dart';
+import 'package:legalite/pages/ChatPeople.dart';
 import 'package:legalite/pages/HomeScreen.dart';
 import 'package:legalite/Lpages/nested_pages/Cases.dart';
 import 'package:legalite/Lpages/ProfileScreen.dart';
@@ -59,7 +60,8 @@ class MyApp extends StatelessWidget {
         '/lprofile': (context) => const LProfile(),
         '/lallCases': (context) => Cases(),
         '/lchatpeople': (context) => LChatPeople(),
-        '/lchat': (context) => LChatPage()
+        '/lchat': (context) => LChatPage(),
+        '/chatpeople': (context) => ChatPeople(),
       },
       theme: ThemeData(primarySwatch: Colors.blue),
       // theme: ThemeData(
