@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:legalite/widgets/drawer_widget.dart';
+import 'package:intl/intl.dart';
+import 'package:intl_utils/intl_utils.dart';
 
 // class ChatPage extends StatefulWidget {
 //   @override
@@ -380,10 +381,10 @@ class MyChatUIState extends State<ChatPage> {
                                   ),
                                 ),
                               ]),
-                              subtitle: const Padding(
+                              subtitle: Padding(
                                 padding: EdgeInsets.only(right: 8, top: 4),
                                 child: Text(
-                                  '10:03 AM',
+                                  formatRelativeTime(data["timestamp"]),
                                   textAlign: TextAlign.right,
                                   style: TextStyle(fontSize: 10),
                                 ),
@@ -419,9 +420,10 @@ class MyChatUIState extends State<ChatPage> {
                               trailing: Container(
                                 width: 50,
                               ),
-                              subtitle: const Padding(
+                              subtitle: Padding(
                                 padding: EdgeInsets.only(left: 8, top: 4),
-                                child: Text('8:04 AM',
+                                child: Text(
+                                    formatRelativeTime(data["timestamp"]),
                                     style: TextStyle(fontSize: 10)),
                               ),
                             );
@@ -595,5 +597,26 @@ class MyChatUIState extends State<ChatPage> {
         ],
       ),
     );
+  }
+
+  String formatRelativeTime(Timestamp timestamp) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = DateTime(now.year, now.month, now.day - 1);
+
+    final dateTime = timestamp.toDate(); // Convert Timestamp to DateTime
+
+    if (dateTime.year == now.year &&
+        dateTime.month == now.month &&
+        dateTime.day == now.day) {
+      return DateFormat.jm().format(dateTime); // Today
+    } else if (dateTime.year == yesterday.year &&
+        dateTime.month == yesterday.month &&
+        dateTime.day == yesterday.day) {
+      return "Yesterday at ${DateFormat.jm().format(dateTime)}"; // Yesterday
+    } else {
+      return DateFormat('MMMM d').format(dateTime) +
+          " at ${DateFormat.jm().format(dateTime)}"; // Other days
+    }
   }
 }

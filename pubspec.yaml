@@ -8,8 +8,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.17.0
+  intl_utils: ^2.8.7
   cupertino_icons: ^1.0.2
-  chatview: ^1.0.1
   equatable: ^2.0.0
   cloud_firestore: ^4.15.4
   firebase_core: ^2.25.3
