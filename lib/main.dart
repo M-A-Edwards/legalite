@@ -8,7 +8,7 @@ import 'package:legalite/Lpages/HomeScreen.dart';
 import 'package:legalite/pages/Chat.dart';
 import 'package:legalite/pages/ChatPeople.dart';
 import 'package:legalite/pages/HomeScreen.dart';
-import 'package:legalite/Lpages/Nested%20pages/Cases.dart';
+import 'package:legalite/Lpages/nested_pages/Cases.dart';
 import 'package:legalite/Lpages/ProfileScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:legalite/pages/AttorneyScreen.dart';
