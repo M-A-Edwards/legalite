@@ -1,198 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:legalite/widgets/drawer_widget.dart';
+// import 'package:legalite/widgets/drawer_widget.dart';
+import 'package:intl/intl.dart';
+// import 'package:intl_utils/intl_utils.dart';
 
-// class LChatPage extends StatefulWidget {
-//   @override
-//   _LChatPageState createState() => _LChatPageState();
-// }
-
-// class _LChatPageState extends State<LChatPage> {
-//   final FirebaseAuth _auth = FirebaseAuth.instance;
-//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-//   final TextEditingController _messageController = TextEditingController();
-
-//   User? _user;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _user = _auth.currentUser;
-//   }
-
-//   void _sendMessage() async {
-//     String messageText = _messageController.text.trim();
-//     if (messageText.isNotEmpty) {
-//       await _firestore.collection('messages').add({
-//         'text': messageText,
-//         'senderId': _user!.uid,
-//         'recipientId': ModalRoute.of(context as BuildContext)!
-//             .settings
-//             .arguments as String,
-//         'timestamp': Timestamp.now(),
-//       });
-//       _messageController.clear();
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Chat Page'),
-//       ),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: StreamBuilder<QuerySnapshot>(
-//               stream: _firestore
-//                   .collection('messages')
-//                   .where('senderId', isEqualTo: _user!.uid)
-//                   .where('recipientId',
-//                       isEqualTo:
-//                           ModalRoute.of(context)!.settings.arguments as String)
-//                   .orderBy('timestamp')
-//                   .snapshots(),
-//               builder: (context, snapshot) {
-//                 if (!snapshot.hasData) {
-//                   return Center(
-//                     child: CircularProgressIndicator(),
-//                   );
-//                 }
-//                 List<DocumentSnapshot> messages = snapshot.data!.docs;
-
-//                 return ListView.builder(
-//                   itemCount: messages.length,
-//                   itemBuilder: (context, index) {
-//                     Map<String, dynamic> data =
-//                         messages[index].data() as Map<String, dynamic>;
-//                     return ListTile(
-//                       title: Text(data['text']),
-//                       subtitle: Text(data['senderId']),
-//                     );
-//                   },
-//                 );
-//               },
-//             ),
-//           ),
-//           Padding(
-//             padding: EdgeInsets.all(8.0),
-//             child: Row(
-//               children: [
-//                 Expanded(
-//                   child: TextField(
-//                     controller: _messageController,
-//                     decoration: InputDecoration(hintText: 'Type a message...'),
-//                   ),
-//                 ),
-//                 IconButton(
-//                   icon: Icon(Icons.send),
-//                   onPressed: _sendMessage,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],class LChatPage extends StatefulWidget {
-//   @override
-//   _LChatPageState createState() => _LChatPageState();
-// }
-
-// class _LChatPageState extends State<LChatPage> {
-//   final FirebaseAuth _auth = FirebaseAuth.instance;
-//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-//   final TextEditingController _messageController = TextEditingController();
-
-//   User? _user;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _user = _auth.currentUser;
-//   }
-
-//   void _sendMessage() async {
-//     String messageText = _messageController.text.trim();
-//     if (messageText.isNotEmpty) {
-//       await _firestore.collection('messages').add({
-//         'text': messageText,
-//         'senderId': _user!.uid,
-//         'recipientId': ModalRoute.of(context as BuildContext)!
-//             .settings
-//             .arguments as String,
-//         'timestamp': Timestamp.now(),
-//       });
-//       _messageController.clear();
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Chat Page'),
-//       ),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: StreamBuilder<QuerySnapshot>(
-//               stream: _firestore
-//                   .collection('messages')
-//                   .where('senderId', isEqualTo: _user!.uid)
-//                   .where('recipientId',
-//                       isEqualTo:
-//                           ModalRoute.of(context)!.settings.arguments as String)
-//                   .orderBy('timestamp')
-//                   .snapshots(),
-//               builder: (context, snapshot) {
-//                 if (!snapshot.hasData) {
-//                   return Center(
-//                     child: CircularProgressIndicator(),
-//                   );
-//                 }
-//                 List<DocumentSnapshot> messages = snapshot.data!.docs;
-
-//                 return ListView.builder(
-//                   itemCount: messages.length,
-//                   itemBuilder: (context, index) {
-//                     Map<String, dynamic> data =
-//                         messages[index].data() as Map<String, dynamic>;
-//                     return ListTile(
-//                       title: Text(data['text']),
-//                       subtitle: Text(data['senderId']),
-//                     );
-//                   },
-//                 );
-//               },
-//             ),
-//           ),
-//           Padding(
-//             padding: EdgeInsets.all(8.0),
-//             child: Row(
-//               children: [
-//                 Expanded(
-//                   child: TextField(
-//                     controller: _messageController,
-//                     decoration: InputDecoration(hintText: 'Type a message...'),
-//                   ),
-//                 ),
-//                 IconButton(
-//                   icon: Icon(Icons.send),
-//                   onPressed: _sendMessage,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-//       ),
-//     );
-//   }
-// }
 var url = 'https://i.imgur.com/gGSj8Ng.png';
 var urlTwo = 'https://i.imgur.com/ub680tN.png';
 
@@ -265,20 +77,20 @@ class MyChatUIState extends State<LChatPage> {
         elevation: 12,
         titleSpacing: 10,
         backgroundColor: const Color(0xffD11C2D),
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-            debugPrint("works");
-          },
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.arrow_back_ios_sharp,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        leadingWidth: 20,
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //     debugPrint("works");
+        //   },
+        //   child: const Padding(
+        //     padding: EdgeInsets.all(8.0),
+        //     child: Icon(
+        //       Icons.arrow_back_ios_sharp,
+        //       color: Colors.white,
+        //     ),
+        //   ),
+        // ),
+        // leadingWidth: 20,
         title: ListTile(
           leading: CircleAvatar(
             backgroundImage: NetworkImage(url),
@@ -379,10 +191,10 @@ class MyChatUIState extends State<LChatPage> {
                                   ),
                                 ),
                               ]),
-                              subtitle: const Padding(
+                              subtitle: Padding(
                                 padding: EdgeInsets.only(right: 8, top: 4),
                                 child: Text(
-                                  '10:03 AM',
+                                  formatRelativeTime(data["timestamp"]),
                                   textAlign: TextAlign.right,
                                   style: TextStyle(fontSize: 10),
                                 ),
@@ -418,9 +230,10 @@ class MyChatUIState extends State<LChatPage> {
                               trailing: Container(
                                 width: 50,
                               ),
-                              subtitle: const Padding(
+                              subtitle: Padding(
                                 padding: EdgeInsets.only(left: 8, top: 4),
-                                child: Text('8:04 AM',
+                                child: Text(
+                                    formatRelativeTime(data["timestamp"]),
                                     style: TextStyle(fontSize: 10)),
                               ),
                             );
@@ -594,5 +407,26 @@ class MyChatUIState extends State<LChatPage> {
         ],
       ),
     );
+  }
+
+  String formatRelativeTime(Timestamp timestamp) {
+    final now = DateTime.now();
+    //final today = DateTime(now.year, now.month, now.day);
+    final yesterday = DateTime(now.year, now.month, now.day - 1);
+
+    final dateTime = timestamp.toDate(); // Convert Timestamp to DateTime
+
+    if (dateTime.year == now.year &&
+        dateTime.month == now.month &&
+        dateTime.day == now.day) {
+      return DateFormat.jm().format(dateTime); // Today
+    } else if (dateTime.year == yesterday.year &&
+        dateTime.month == yesterday.month &&
+        dateTime.day == yesterday.day) {
+      return "Yesterday at ${DateFormat.jm().format(dateTime)}"; // Yesterday
+    } else {
+      return DateFormat('MMMM d').format(dateTime) +
+          " at ${DateFormat.jm().format(dateTime)}"; // Other days
+    }
   }
 }

@@ -26,7 +26,7 @@ class _ClientsState extends State<Clients> {
             return ListView.builder(
               itemCount: client.length,
               itemBuilder: (context, index) {
-                String clientId = client[index].id;
+                // String clientId = client[index].id;
                 Map<String, dynamic> clientData =
                     client[index].data() as Map<String, dynamic>;
                 debugPrint('client data: $clientData');
