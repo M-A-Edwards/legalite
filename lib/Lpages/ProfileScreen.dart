@@ -185,6 +185,18 @@ class _LProfileState extends State<LProfile> {
                               : const Text('<None>'),
                         ),
                         const Divider(),
+                        ListTile(
+                          title: const Text(
+                            'Specialization',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: (userData['Tags'] != null)
+                              ? Text(userData['Tags'])
+                              : const Text('<None>'),
+                        ),
+                        const Divider(),
                         ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size.fromHeight(50),
