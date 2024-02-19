@@ -97,7 +97,7 @@ class clientDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Current cases",
+              "Future",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -120,7 +120,7 @@ class clientDetails extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              "Past cases",
+              "Past",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
