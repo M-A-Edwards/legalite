@@ -68,22 +68,22 @@ class _ChatList extends State<LChatPeople> {
       return Scaffold(
           drawer: const MyDrawer(),
           appBar: AppBar(
-            title: Text("Chats"),
+            title: const Text("Chats"),
           ),
-          body: Center(
+          body: const Center(
             child: CircularProgressIndicator(),
           ));
     } else {
       return Scaffold(
         drawer: const MyDrawer(),
         appBar: AppBar(
-          title: Text("Chats"),
+          title: const Text("Chats"),
         ),
         body: ListView.builder(
           itemCount: chatUsers.length,
           itemBuilder: (context, index) {
             final userId = chatUsers[index].id;
-            debugPrint("user: ${chatUsers[index].data()} userid: ${userId}");
+            debugPrint("user: ${chatUsers[index].data()} userid: $userId");
             Map<String, dynamic> user =
                 chatUsers[index].data() as Map<String, dynamic>;
 

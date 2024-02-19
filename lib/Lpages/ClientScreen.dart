@@ -20,7 +20,7 @@ class _ClientsState extends State<Clients> {
           stream: FirebaseFirestore.instance.collection('clients').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             List<DocumentSnapshot> client = snapshot.data!.docs;
             return ListView.builder(

@@ -72,7 +72,7 @@ class MyChatUIState extends State<LChatPage> {
     }
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(245, 245, 243, 1),
+      backgroundColor: const Color.fromRGBO(245, 245, 243, 1),
       appBar: AppBar(
         elevation: 12,
         titleSpacing: 10,
@@ -97,7 +97,8 @@ class MyChatUIState extends State<LChatPage> {
           ),
           title: Text(
             senderName,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
           ),
           subtitle: const Text(
             'online',
@@ -129,7 +130,7 @@ class MyChatUIState extends State<LChatPage> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -144,7 +145,7 @@ class MyChatUIState extends State<LChatPage> {
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
@@ -192,11 +193,12 @@ class MyChatUIState extends State<LChatPage> {
                                 ),
                               ]),
                               subtitle: Padding(
-                                padding: EdgeInsets.only(right: 8, top: 4),
+                                padding:
+                                    const EdgeInsets.only(right: 8, top: 4),
                                 child: Text(
                                   formatRelativeTime(data["timestamp"]),
                                   textAlign: TextAlign.right,
-                                  style: TextStyle(fontSize: 10),
+                                  style: const TextStyle(fontSize: 10),
                                 ),
                               ),
                               trailing: CircleAvatar(
@@ -231,10 +233,10 @@ class MyChatUIState extends State<LChatPage> {
                                 width: 50,
                               ),
                               subtitle: Padding(
-                                padding: EdgeInsets.only(left: 8, top: 4),
+                                padding: const EdgeInsets.only(left: 8, top: 4),
                                 child: Text(
                                     formatRelativeTime(data["timestamp"]),
-                                    style: TextStyle(fontSize: 10)),
+                                    style: const TextStyle(fontSize: 10)),
                               ),
                             );
                           }
