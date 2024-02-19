@@ -19,13 +19,13 @@ class Cases extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Cases'),
+        title: const Text('All Cases'),
       ),
       body: ListView.builder(
         itemCount: allCases.length,
         itemBuilder: (context, index) {
           return Card(
-            margin: EdgeInsets.symmetric(vertical: 8),
+            margin: const EdgeInsets.symmetric(vertical: 8),
             child: ListTile(
               title: Text(allCases[index].title),
               subtitle: Text(

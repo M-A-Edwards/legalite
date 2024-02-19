@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:legalite/widgets/drawer_widget.dart';
 
@@ -64,26 +64,26 @@ class _ChatList extends State<LChatPeople> {
   }
 
   Widget build(BuildContext context) {
-    if (chatUsers.isEmpty || chatUsers == [] || chatUsers == null) {
+    if (chatUsers.isEmpty || chatUsers == []) {
       return Scaffold(
           drawer: const MyDrawer(),
           appBar: AppBar(
-            title: Text("Chats"),
+            title: const Text("Chats"),
           ),
-          body: Center(
+          body: const Center(
             child: CircularProgressIndicator(),
           ));
     } else {
       return Scaffold(
         drawer: const MyDrawer(),
         appBar: AppBar(
-          title: Text("Chats"),
+          title: const Text("Chats"),
         ),
         body: ListView.builder(
           itemCount: chatUsers.length,
           itemBuilder: (context, index) {
             final userId = chatUsers[index].id;
-            debugPrint("user: ${chatUsers[index].data()} userid: ${userId}");
+            debugPrint("user: ${chatUsers[index].data()} userid: $userId");
             Map<String, dynamic> user =
                 chatUsers[index].data() as Map<String, dynamic>;
 

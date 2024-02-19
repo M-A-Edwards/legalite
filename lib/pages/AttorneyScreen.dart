@@ -20,7 +20,7 @@ class _AttorneysState extends State<Attorneys> {
           stream: FirebaseFirestore.instance.collection('lawyers').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             List<DocumentSnapshot> client = snapshot.data!.docs;
             return ListView.builder(
@@ -33,6 +33,15 @@ class _AttorneysState extends State<Attorneys> {
                 String clientName = clientData['Name'];
                 String clientDesc = clientData['Desc'];
                 String clientEmail = clientData['Email'];
+                String clientLoc = (clientData['Location'] != null)
+                    ? clientData['Location']
+                    : '<None>';
+                String clientnum = (clientData['Phone Number'] != null)
+                    ? clientData['Phone Number']
+                    : '<None>';
+                String clientEdu = (clientData['Education'] != null)
+                    ? clientData['Education']
+                    : '<None>';
                 return ListTile(
                   title: Text(clientName),
                   subtitle: Text('$clientDesc - Hyderabad'),
@@ -44,6 +53,9 @@ class _AttorneysState extends State<Attorneys> {
                               lawyerName: clientName,
                               lawyerDesc: clientDesc,
                               lawyerEmail: clientEmail,
+                              lawyerLoc: clientLoc,
+                              lawyernum: clientnum,
+                              lawyerEdu: clientEdu,
                               lawyerId: clientId)),
                     );
                   },
@@ -60,12 +72,18 @@ class LawyerDetails extends StatelessWidget {
   final String lawyerName;
   final String lawyerDesc;
   final String lawyerEmail;
+  final String lawyerLoc;
+  final String lawyernum;
+  final String lawyerEdu;
   final String lawyerId;
 
   LawyerDetails({
     required this.lawyerName,
     required this.lawyerDesc,
     required this.lawyerEmail,
+    required this.lawyerLoc,
+    required this.lawyernum,
+    required this.lawyerEdu,
     required this.lawyerId,
   });
 
@@ -73,7 +91,7 @@ class LawyerDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lawyer Details'),
+        title: const Text('Lawyer Details'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -106,7 +124,7 @@ class LawyerDetails extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                'Hyderabad',
+                lawyerLoc,
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -117,7 +135,7 @@ class LawyerDetails extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                'AIIMS Delhi',
+                lawyerEdu,
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -150,7 +168,7 @@ class LawyerDetails extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '9550151038',
+                lawyernum,
                 style: TextStyle(fontSize: 16),
               ),
             ),

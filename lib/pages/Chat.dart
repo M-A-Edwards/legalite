@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_utils/intl_utils.dart';
+// import 'package:intl_utils/intl_utils.dart';
 
 // class ChatPage extends StatefulWidget {
 //   @override
@@ -601,7 +601,7 @@ class MyChatUIState extends State<ChatPage> {
 
   String formatRelativeTime(Timestamp timestamp) {
     final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
+    // final today = DateTime(now.year, now.month, now.day);
     final yesterday = DateTime(now.year, now.month, now.day - 1);
 
     final dateTime = timestamp.toDate(); // Convert Timestamp to DateTime

@@ -20,13 +20,13 @@ class _ClientsState extends State<Clients> {
           stream: FirebaseFirestore.instance.collection('clients').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             List<DocumentSnapshot> client = snapshot.data!.docs;
             return ListView.builder(
               itemCount: client.length,
               itemBuilder: (context, index) {
-                String clientId = client[index].id;
+                // String clientId = client[index].id;
                 Map<String, dynamic> clientData =
                     client[index].data() as Map<String, dynamic>;
                 debugPrint('client data: $clientData');

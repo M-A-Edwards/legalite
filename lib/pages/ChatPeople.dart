@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:legalite/widgets/cdrawer_widget.dart';
 
@@ -41,7 +41,7 @@ class _ChatList extends State<ChatPeople> {
       if (senderId != _user!.uid) {
         chatUserIds.add(senderId);
       }
-      if (recipientId != _user!.uid) {
+      if (recipientId != _user!.uid) { 
         chatUserIds.add(recipientId);
       }
     });
@@ -64,7 +64,7 @@ class _ChatList extends State<ChatPeople> {
   }
 
   Widget build(BuildContext context) {
-    if (chatUsers.isEmpty || chatUsers == [] || chatUsers == null) {
+    if (chatUsers.isEmpty || chatUsers == []) {
       return Scaffold(
           drawer: const MyDrawer(),
           appBar: AppBar(
