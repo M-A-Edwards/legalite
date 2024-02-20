@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:legalite/Lpages/ClientScreen.dart';
 // import 'package:legalite/Lpages/HomeScreen.dart';
 // import 'package:legalite/Lpages/ProfileScreen.dart';
+import 'package:flutter/gestures.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -23,12 +26,15 @@ class MyDrawer extends StatelessWidget {
                 child: InkWell(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 40),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        CircleAvatar(
-                            radius: 30,
-                            backgroundImage: AssetImage('lib/static/idk.jpg')),
-                        Column(
+                        const CircleAvatar(
+                          radius: 30,
+                          backgroundImage: NetworkImage(
+                              'https://hips.hearstapps.com/hmg-prod/images/beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg'),
+                          // backgroundImage: AssetImage('lib/static/idk.jpg')),
+                        ),
+                        const Column(
                           children: [
                             SizedBox(
                               width: 10,
@@ -39,15 +45,53 @@ class MyDrawer extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("indigo_1008",
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white70)),
-                              SizedBox(
+                              StreamBuilder<DocumentSnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('clients')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return const Center(
+                                          child: Text("Something went wrong!"));
+                                    } else if (snapshot.hasData &&
+                                        snapshot.data != null) {
+                                      DocumentSnapshot dat = snapshot.data!;
+                                      return Text(
+                                        dat['Name'],
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white70),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                  }),
+                              // Text("indigo_1008",
+                              //     style: TextStyle(
+                              //         fontSize: 20, color: Colors.white70)),
+                              const SizedBox(
                                 width: 4,
                               ),
-                              Text(
-                                "View profile",
-                                style: TextStyle(fontSize: 14),
+                              RichText(
+                                text: TextSpan(
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.pushNamed(context, '/profile');
+                                    },
+                                  text: 'View Profile',
+                                  style: const TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Colors.black),
+                                ),
                               )
                             ])
                       ],
