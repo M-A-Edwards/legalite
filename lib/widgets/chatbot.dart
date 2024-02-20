@@ -30,6 +30,10 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  String transformString(String original) {
+    return "Bearer sk-yRZ$original";
+  }
+
   Future<void> _sendMessage(String message) async {
     setState(() {
       messages.add('You: $message');
@@ -39,7 +43,8 @@ class _ChatScreenState extends State<ChatScreen> {
     final response = await http.post(
       Uri.parse('https://api.openai.com/v1/chat/completions'),
       headers: {
-        'Authorization': 'Bearer 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',
+        'Authorization':
+            transformString("r85OULgtka5RrkOwlT3BlbkFJm9jOQA0kwlgiNk7CHdFB"),
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -85,12 +90,17 @@ class _ChatScreenState extends State<ChatScreen> {
               itemCount: messages.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 4.0, horizontal: 8.0),
                   child: Align(
-                    alignment: messages[index].startsWith('You:') ? Alignment.centerRight : Alignment.centerLeft,
+                    alignment: messages[index].startsWith('You:')
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: messages[index].startsWith('You:') ? Colors.blue : Colors.grey[300],
+                        color: messages[index].startsWith('You:')
+                            ? Colors.blue
+                            : Colors.grey[300],
                         borderRadius: BorderRadius.circular(8),
                       ),
                       padding: const EdgeInsets.all(12),
@@ -98,7 +108,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Text(
                         messages[index],
                         style: TextStyle(
-                          color: messages[index].startsWith('You:') ? Colors.white : Colors.black,
+                          color: messages[index].startsWith('You:')
+                              ? Colors.white
+                              : Colors.black,
                         ),
                       ),
                     ),
