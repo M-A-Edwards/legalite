@@ -55,13 +55,13 @@ Legalite is a comprehensive legal system application developed as part of the Go
 - **Firebase Account**: Set up a Firebase project and obtain necessary configuration files for Firebase integration.
 
 ### Installation Steps:
-1. Clone the Legalite repository from [GitHub Repo URL].
+1. Clone the Legalite repository from https://github.com/M-A-Edwards/legalite.
    ```bash
-   git clone [GitHub Repo URL]
+   git clone https://github.com/M-A-Edwards/legalite
    ```
 2. Navigate to the project directory.
    ```bash
-   cd legalite_flutter_firebase
+   cd legalite
    ```
 3. Configure Firebase services by integrating Firebase Authentication and Firestore database.
 4. Install project dependencies using Flutter's package manager, `pubspec.yaml`.
