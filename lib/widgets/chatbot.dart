@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -30,50 +30,39 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  String transformString(String original) {
-    return "Bearer sk-yRZ$original";
-  }
-
   Future<void> _sendMessage(String message) async {
     setState(() {
       messages.add('You: $message');
       _scrollToBottom();
     });
 
-    final response = await http.post(
-      Uri.parse('https://api.openai.com/v1/chat/completions'),
-      headers: {
-        'Authorization':
-            transformString("r85OULgtka5RrkOwlT3BlbkFJm9jOQA0kwlgiNk7CHdFB"),
-        'Content-Type': 'application/json',
-      },
-      body: json.encode({
-        'messages': [
-          {
-            'role': 'user',
-            'content': message,
-          }
-        ],
-        'max_tokens': 150,
-        'model': 'gpt-3.5-turbo',
-      }),
-    );
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    DocumentReference documentReference =
+    firestore.collection('clients').doc(uid);
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
-      setState(() {
-        if (data['choices'] != null &&
-            data['choices'].isNotEmpty &&
-            data['choices'][0]['message'] != null) {
-          messages.add(data['choices'][0]['message']['content']);
-          _scrollToBottom();
-        } else {
-          print('Failed to get response text: ${response.body}');
-        }
-      });
-    } else {
-      print('Failed to send message: ${response.body}');
-    }
+    CollectionReference subcollectionReference =
+    documentReference.collection('chatbot');
+
+    DocumentReference specificDocumentReference =
+    subcollectionReference.doc();
+
+    await specificDocumentReference.set({'prompt': message});
+
+    await specificDocumentReference.snapshots().firstWhere((snapshot) {
+      var data = snapshot.data() as Map<String, dynamic>;
+      var status = data['status'] as Map<String, dynamic>?;
+
+      return status != null && status['state'] == 'COMPLETED';
+    });
+
+    var updatedSnapshot =
+    await specificDocumentReference.get();
+    var responseData = updatedSnapshot.data() as Map<String, dynamic>;
+    String response = responseData['response'] ?? '';
+    setState(() {
+      messages.add('Law Bot: $response');
+    });
   }
 
   @override
