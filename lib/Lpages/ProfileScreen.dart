@@ -187,6 +187,18 @@ class _LProfileState extends State<LProfile> {
                         const Divider(),
                         ListTile(
                           title: const Text(
+                            'Experience',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: (userData['Exp'] != null)
+                              ? Text(userData['Exp'])
+                              : const Text('<None>'),
+                        ),
+                        const Divider(),
+                        ListTile(
+                          title: const Text(
                             'Specialization',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,

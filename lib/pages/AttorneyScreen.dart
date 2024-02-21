@@ -41,13 +41,15 @@ class _AttorneysState extends State<Attorneys> {
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('lawyers').snapshots(),
+              stream:
+                  FirebaseFirestore.instance.collection('lawyers').snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 List<DocumentSnapshot> clients = snapshot.data!.docs;
-                List<DocumentSnapshot> filteredClients = clients.where((client) {
+                List<DocumentSnapshot> filteredClients =
+                    clients.where((client) {
                   String clientName = client['Name'].toString().toLowerCase();
                   String searchTerm = _searchController.text.toLowerCase();
                   return clientName.contains(searchTerm);
@@ -56,13 +58,23 @@ class _AttorneysState extends State<Attorneys> {
                   itemCount: filteredClients.length,
                   itemBuilder: (context, index) {
                     String clientId = filteredClients[index].id;
-                    Map<String, dynamic> clientData = filteredClients[index].data() as Map<String, dynamic>;
+                    Map<String, dynamic> clientData =
+                        filteredClients[index].data() as Map<String, dynamic>;
                     String clientName = clientData['Name'];
                     String clientDesc = clientData['Desc'];
                     String clientEmail = clientData['Email'];
-                    String clientLoc = (clientData['Location'] != null) ? clientData['Location'] : '<None>';
-                    String clientnum = (clientData['Phone Number'] != null) ? clientData['Phone Number'] : '<None>';
-                    String clientEdu = (clientData['Education'] != null) ? clientData['Education'] : '<None>';
+                    String clientLoc = (clientData['Location'] != null)
+                        ? clientData['Location']
+                        : '<None>';
+                    String clientnum = (clientData['Phone Number'] != null)
+                        ? clientData['Phone Number']
+                        : '<None>';
+                    String clientEdu = (clientData['Education'] != null)
+                        ? clientData['Education']
+                        : '<None>';
+                    String clientExp = (clientData['Exp'] != null)
+                        ? clientData['Exp']
+                        : '<None>';
                     return ListTile(
                       title: Text(clientName),
                       subtitle: Text('$clientDesc - Hyderabad'),
@@ -77,6 +89,7 @@ class _AttorneysState extends State<Attorneys> {
                               lawyerLoc: clientLoc,
                               lawyernum: clientnum,
                               lawyerEdu: clientEdu,
+                              lawyerExp: clientExp,
                               lawyerId: clientId,
                             ),
                           ),
@@ -102,6 +115,7 @@ class LawyerDetails extends StatelessWidget {
   final String lawyerLoc;
   final String lawyernum;
   final String lawyerEdu;
+  final String lawyerExp;
   final String lawyerId;
 
   LawyerDetails({
@@ -111,6 +125,7 @@ class LawyerDetails extends StatelessWidget {
     required this.lawyerLoc,
     required this.lawyernum,
     required this.lawyerEdu,
+    required this.lawyerExp,
     required this.lawyerId,
   });
 
@@ -129,12 +144,14 @@ class LawyerDetails extends StatelessWidget {
               leading: const Icon(Icons.person, size: 40, color: Colors.blue),
               title: Text(
                 lawyerName,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 16),
             ListTile(
-              leading: const Icon(Icons.description, size: 40, color: Colors.blue),
+              leading:
+                  const Icon(Icons.description, size: 40, color: Colors.blue),
               title: const Text(
                 'Specialty:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -145,7 +162,8 @@ class LawyerDetails extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.location_on, size: 40, color: Colors.blue),
+              leading:
+                  const Icon(Icons.location_on, size: 40, color: Colors.blue),
               title: const Text(
                 'Location:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -166,14 +184,14 @@ class LawyerDetails extends StatelessWidget {
                 style: const TextStyle(fontSize: 16),
               ),
             ),
-            const ListTile(
+            ListTile(
               leading: Icon(Icons.work, size: 40, color: Colors.blue),
               title: Text(
                 'Experience:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '8 years',
+                lawyerExp,
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -205,7 +223,8 @@ class LawyerDetails extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/chat', arguments: [lawyerId, lawyerName]);
+                  Navigator.pushNamed(context, '/chat',
+                      arguments: [lawyerId, lawyerName]);
                 },
                 child: const Text("Chat"),
               ),

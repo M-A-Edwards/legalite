@@ -19,6 +19,7 @@ class _EditLProfilePageState extends State<EditLProfilePage> {
   final TextEditingController _specialController = TextEditingController();
   final TextEditingController _locController = TextEditingController();
   final TextEditingController _eduController = TextEditingController();
+  final TextEditingController _expController = TextEditingController();
 
   @override
   void initState() {
@@ -53,6 +54,8 @@ class _EditLProfilePageState extends State<EditLProfilePage> {
           (userData['Location'] != null) ? userData['Location'] : '<None>';
       _eduController.text =
           (userData['Education'] != null) ? userData['Education'] : '<None>';
+      _expController.text =
+          (userData['Exp'] != null) ? userData['Exp'] : '<None>';
     });
   }
 
@@ -99,6 +102,10 @@ class _EditLProfilePageState extends State<EditLProfilePage> {
               decoration: const InputDecoration(labelText: 'Education'),
             ),
             TextField(
+              controller: _eduController,
+              decoration: const InputDecoration(labelText: 'Experience'),
+            ),
+            TextField(
               controller: _specialController,
               decoration: const InputDecoration(labelText: 'Specialization'),
             ),
@@ -127,6 +134,7 @@ class _EditLProfilePageState extends State<EditLProfilePage> {
       'Tags': _specialController.text,
       'Location': _locController.text,
       'Education': _eduController.text,
+      'Experience': _expController.text,
     });
 
     Navigator.pop(context);

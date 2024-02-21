@@ -37,7 +37,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             height: 100,
           ),
           Text(
-            "Login C",
+            "Login Client",
             style: TextStyle(fontSize: 60, fontFamily: 'Consolas'),
           ),
           const SizedBox(height: 200),

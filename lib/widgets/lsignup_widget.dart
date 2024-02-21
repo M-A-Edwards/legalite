@@ -41,8 +41,8 @@ class _LSignUpWidgetState extends State<LSignUpWidget> {
             height: 100,
           ),
           const Text(
-            "Signup L",
-            style: TextStyle(fontSize: 60, fontFamily: 'Consolas'),
+            "Signup Lawyer",
+            style: TextStyle(fontSize: 50, fontFamily: 'Consolas'),
           ),
           const SizedBox(height: 200),
           TextField(

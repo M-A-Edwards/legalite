@@ -37,8 +37,8 @@ class _LoginWidgetState extends State<LLoginWidget> {
             height: 100,
           ),
           Text(
-            "Login L",
-            style: TextStyle(fontSize: 60, fontFamily: 'Consolas'),
+            "Login Lawyer",
+            style: TextStyle(fontSize: 50, fontFamily: 'Consolas'),
           ),
           const SizedBox(height: 200),
           TextField(

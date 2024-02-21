@@ -114,18 +114,18 @@ class MyDrawer extends StatelessWidget {
               },
               // onTap: Home,
             ),
-            ListTile(
-              leading: const Icon(Icons.manage_accounts_outlined,
-                  color: Colors.white54),
-              title: const Text('Profile',
-                  style: TextStyle(fontSize: 14, color: Colors.white70)),
-              onTap: () {
-                // Navigator.pop(context);
-                Navigator.pushNamed(context, '/lprofile');
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (context) => const Profile()));
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.manage_accounts_outlined,
+            //       color: Colors.white54),
+            //   title: const Text('Profile',
+            //       style: TextStyle(fontSize: 14, color: Colors.white70)),
+            //   onTap: () {
+            //     // Navigator.pop(context);
+            //     Navigator.pushNamed(context, '/lprofile');
+            //     // Navigator.of(context).push(
+            //     //     MaterialPageRoute(builder: (context) => const Profile()));
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.people_outline_outlined,
                   color: Colors.white54),

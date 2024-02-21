@@ -41,7 +41,7 @@ class _ChatList extends State<ChatPeople> {
       if (senderId != _user!.uid) {
         chatUserIds.add(senderId);
       }
-      if (recipientId != _user!.uid) { 
+      if (recipientId != _user!.uid) {
         chatUserIds.add(recipientId);
       }
     });
