@@ -101,4 +101,3 @@ Legalite is a collaborative effort fueled by the passion and dedication of its c
 | :---: | :---: | :---: |
 ---
 
-This README serves as a comprehensive guide to Legalite, covering its features, technical specifications, installation instructions. If you have any additional questions or suggestions, please don't hesitate to reach out for further refinement.
